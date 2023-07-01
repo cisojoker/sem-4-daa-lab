@@ -38,6 +38,7 @@ int main() {
         int v, c;
         cin >> v >> c;
         a[v][c] = 1;
+        a[c][v]=1;
     }
     vector<int> ans;
     dfs(a, ans, m, visited);
