@@ -60,7 +60,6 @@ static bool cmp(vector<int>&a,vector<int>& b){
     int n = 4; // Number of nodes in the graph
     vector<vector<vector<int>>> ad(n);
     // Add edges and weights to the adjacency list
-    // For example:
     ad[0].push_back({1, 5}); // Edge between node 0 and node 1 with weight 5
     ad[0].push_back({2, 3}); // Edge between node 0 and node 2 with weight 3
     ad[1].push_back({2, 2}); // Edge between node 1 and node 2 with weight 2
