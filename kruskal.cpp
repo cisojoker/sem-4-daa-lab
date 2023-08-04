@@ -1,70 +1,64 @@
 #include<bits/stdc++.h>
 using namespace std;
-	//Function to find sum of weights of edges of the Minimum Spanning Tree.
-  	//Function to find sum of weights of edges of the Minimum Spanning Tree.
-    // kruskal's algorithm
-    void makeset(vector<int>& parent, vector<int>& rank, int n) {
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-            rank[i] = 0;
-        }
+static bool cmp(vector<int>&a,vector<int>& b){
+	    return b[0]>a[0];
+	}
+	void makeset(vector<int>&parent,vector<int>&rank,int V){
+	    for (int i=0;i<V;i++){
+	        parent[i]=i;
+	        rank[i]=0;
+	    }
+	}
+	int findparent(vector<int>& parent,int node){
+	    if (parent[node]==node){
+	        return node;
+	    }
+	    return parent[node]=findparent(parent,parent[node]);
+	}
+	void unionset(vector<int>&parent,vector<int>&rank,int u,int v){
+	    int f=findparent(parent,u);
+	    int s=findparent(parent,v);
+	    if (rank[f]<rank[s]){
+	        parent[f]=s;
+	    }
+	    else if(rank[s]<rank[f]){
+	        parent[s]=f;
+	    }
+	    else{
+	         parent[s]=f;
+	         rank[f]++;
+	    }
+	}
+    int spanningTree(int V, vector<vector<vector<int>>>adj)
+    {
+       vector<int>parent(V);
+       vector<int>rank(V);
+       makeset(parent,rank,V);
+       
+       vector<vector<int>>ad;
+       for (int j=0;j<V;j++){
+           for(int  o=0;o<adj[j].size();o++){
+               int v=adj[j][o][0];
+               int w=adj[j][o][1];
+               int u=j;
+               ad.push_back({w,u,v});
+           }
+       }
+       sort(ad.begin(),ad.end(),cmp);
+       int wt=0;
+       for(int i=0;i<ad.size();i++){
+           int u=findparent(parent,ad[i][1]);
+           int v=findparent(parent,ad[i][2]);
+           if(u!=v){
+               wt=wt+ad[i][0];
+               unionset(parent,rank,u,v);
+           }
+       }
+       return wt;
     }
-    int findparent(vector<int>& parent, int node) {
-        if (parent[node] == node) {
-            return node;
-        }
-        return parent[node] = findparent(parent, parent[node]);
-    }
-    void unionset(int u, int v, vector<int>& parent, vector<int>& rank) {
-        u = findparent(parent, u);
-        v = findparent(parent, v);
-        if (rank[u] < rank[v]) {
-            parent[u] = v;
-        }
-        else if (rank[v] < rank[u]) {
-            parent[v] = u;
-        }
-        else {
-            parent[v] = u;
-            rank[u]++;
-        }
-    }
-    static bool cmp(vector<int>& a, vector<int>& b) {
-        return a[0] < b[0];
-    }
-
-    int spanningTree(int n, vector<vector<int>> ad[]) {
-        vector<int> parent(n);
-        vector<int> rank(n);
-        makeset(parent, rank, n);
-
-        vector<vector<int>> adj;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < ad[i].size(); j++) {
-                int u = i;
-                int v = ad[i][j][0];
-                int w = ad[i][j][1];
-                adj.push_back({ w, u, v });
-            }
-        }
-
-        sort(adj.begin(), adj.end(), cmp);
-
-        int minwt = 0;
-        for (int i = 0; i < adj.size(); i++) {
-            int u = findparent(parent, adj[i][1]);
-            int v = findparent(parent, adj[i][2]);
-            int wt = adj[i][0];
-            if (u != v) {
-                minwt += wt;
-                unionset(u, v, parent, rank);
-            }
-    }return minwt;
-}
-
-int main() {
+    int main() {
     int n = 4; // Number of nodes in the graph
-    vector<vector<int>> ad[n];
+    vector<vector<vector<int>>> ad(n);
     // Add edges and weights to the adjacency list
     // For example:
     ad[0].push_back({1, 5}); // Edge between node 0 and node 1 with weight 5
