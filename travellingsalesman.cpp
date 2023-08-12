@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+
 int tsp(const vector<vector<int>>& cost) {
     int n = cost.size();
     vector<int> tour(n, 0);  // Initialize tour with city indices
@@ -11,6 +12,7 @@ int tsp(const vector<vector<int>>& cost) {
     do {
         int current_cost = 0;
         int current_city = 0;
+
         for (int i = 0; i < n; ++i) {
             current_cost += cost[current_city][tour[i]];
             current_city = tour[i];
@@ -19,13 +21,13 @@ int tsp(const vector<vector<int>>& cost) {
         min_cost = min(min_cost, current_cost);
     } while (next_permutation(tour.begin() + 1, tour.end()));
     return min_cost;
-} 
+}
 int main()
 { 
     vector<vector<int>> cost = {
-    {0, 2, 4},
-    {1, 0, 5},
-    {3, 6, 0}
+    {0, 1000,5000},
+    {5000, 0, 1000},
+    {1000,5000, 0}
 } ;
 cout<<tsp(cost);
     return 0;
