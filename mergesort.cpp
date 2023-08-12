@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-void merge(int a[],int si,int mid,int ei){
+void merge(vector<int>&a,int si,int mid,int ei){
     int n1=mid-si+1;
     int n2=ei-mid;
     int left[n1];
@@ -31,7 +29,7 @@ void merge(int a[],int si,int mid,int ei){
             j++;l++;
     }
 }
-void mergesort(int a[],int si,int ei){
+void mergesort(vector<int>&a,int si,int ei){
     if (si>=ei)return ;
    int mid=(si+ei)/2;
     mergesort(a,si,mid);
@@ -39,22 +37,20 @@ void mergesort(int a[],int si,int ei){
     merge(a,si,mid,ei);
 }
 int main(){
-    cout<<"enter the size of array"<<endl;
-    int n;cin>>n;int a[n];
-    for (int i=0;i<n;i++){
-        cin>>a[i];
+    int n;
+    cout<<"Enter the size of array\n";
+    cin>>n;
+     vector<int>arr(n);
+    for(int i=0;i<n;i++){
+        int a=rand()%(INT_MAX);
+        arr[i]=a;
     }
-    cout<<"array before sorting"<<endl;
-    for (auto x:a){
-        cout<<x;
+    double s1=clock();
+    mergesort(arr,0,n-1);
+    double s2=clock();
+    cout<<"time taken by the mergesort algorithm is "<<((s2-s1)/CLOCKS_PER_SEC)<<endl;
+    for(auto x:arr){
+        cout<<x<<" ";
     }
-    clock_t start=clock();
-    mergesort(a,0,n-1);
-    clock_t end=clock();
-       cout<<"array after sorting"<<endl;
-    for (auto x:a){
-        cout<<x;
-    }
-    cout<<endl<<"time take by this algorithm is "<<end-start/CLOCKS_PER_SEC<<"SECONDS"<<endl;
     return 0;
 }
