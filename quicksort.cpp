@@ -1,7 +1,7 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int quick(int a[],int si,int ei){
+int quick(vector<int>&a,int si,int ei){
       int pi=(si+ei)/2;
       int pivot=a[pi];
       swap(a[si],a[pi]);
@@ -20,29 +20,29 @@ int quick(int a[],int si,int ei){
       swap(a[ei],a[si]);
       return ei;
 }
-void quicksort(int a[],int si,int ei){
+void quicksort(vector<int>&a,int si,int ei){
     if(si>=ei)return ;
     int c=quick(a,si,ei);
     quicksort(a,si,c-1);
     quicksort(a,c+1,ei);
 }
+
 int main(){
-    cout<<"enter the size of array"<<endl;
-    int n;cin>>n;int a[n];
-    for (int i=0;i<n;i++){
-        cin>>a[i];
+    int n;
+    cout<<"Enter the size of array\n";
+    cin>>n;
+     vector<int>arr(n);
+    for(int i=0;i<n;i++){
+        int a=rand()%(INT_MAX);
+        arr[i]=a;
     }
-    cout<<"array before sorting"<<endl;
-    for (auto x:a){
-        cout<<x;
+    double ss1=clock();
+    quicksort(arr,0,n-1);
+    double ss2=clock();
+    cout<<"time taken by the quicksort algorithm is "<<((ss2-ss1)/CLOCKS_PER_SEC)<<endl;
+    for(auto x:arr){
+        cout<<x<<" ";
     }
-    clock_t start=clock();
-    quicksort(a,0,n-1);
-    clock_t end=clock();
-       cout<<"array after sorting"<<endl;
-    for (auto x:a){
-        cout<<x;
-    }
-    cout<<endl<<"time take by this algorithm is "<<end-start/CLOCKS_PER_SEC<<"SECONDS"<<endl;
     return 0;
 }
+    
