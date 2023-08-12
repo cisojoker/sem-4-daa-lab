@@ -1,50 +1,36 @@
-#include <iostream>
-#include <vector>
-#include <stack>
-
+#include<bits/stdc++.h>
 using namespace std;
-
-void dfs(vector<vector<int>>& a, vector<int>& ans, stack<int>& m, vector<int>& visited) {
-    cout << "Enter the vertex to start: ";
-    int st;
-    cin >> st;
-    m.push(st);
-    while (!m.empty()) {
-        int top = m.top();
-        ans.push_back(top);
-        visited[top] = 1;
-        m.pop();
-        for (int k = a[top].size() - 1; k >= 0; k--) {
-            if (a[top][k] == 1 && visited[k] == 0) {
-                m.push(k);
-                visited[k] = 1;
-            }
-        }
+queue<int>q;
+vector<int>ans;
+void dfs(vector<vector<int>>&a,vector<int>& visited,int st){
+ans.push_back(st);
+visited[st]=1;
+int n=a.size();
+for(int i=0;i<n;i++){
+    if(a[st][i]&& !visited[i]){
+        dfs(a,visited,i);
     }
 }
+}
 
-int main() {
+int main(){
+    cout<<"enter the number of vertices"<<endl;
     int n;
-    cout << "Enter the number of vertices: ";
-    cin >> n;
-    vector<int> visited(n, 0);
-    cout << "Enter the number of edges: ";
-    int o;
-    cin >> o;
-    stack<int> m;
-    vector<vector<int>> a(n, vector<int>(n, 0));
-    cout << "Enter the edges: " << endl;
-    for (int j = 0; j < o; j++) {
-        int v, c;
-        cin >> v >> c;
-        a[v][c] = 1;
-        a[c][v]=1;
+    cin>>n;
+    vector<int>vis(n,0);
+    vector<vector<int>>m(n,vector<int>(n));
+    cout<<"enter the adjacency matrix";
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>m[i][j];
+        }
+    } 
+    cout<<"enter the start vertex"<<endl;
+    int u;
+    cin>>u;
+    dfs(m,vis,u);
+    for(auto x:ans){
+        cout<<x;
     }
-    vector<int> ans;
-    dfs(a, ans, m, visited);
-    for (auto x : ans) {
-        cout << x << " ";
-    }
-    cout << endl;
     return 0;
 }
