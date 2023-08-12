@@ -1,51 +1,46 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int binarysearch(int a[],int low,int high,int key){
-    while(high>=low){
-        int mid=(low+high)/2;
-        if(a[mid]==key)
-        return mid;
-      else  if(a[mid]>key)
-       high=mid-1;
-        else if (a[mid]<key)
-         low=mid+1;
+void binary_search(vector<int>arr,int key){
+    int n=arr.size();
+    int l=0;
+    int h=n-1;
+float start,end;
+ start=clock();
+    while(l<=h){
+        int mid=l+(h-l)/2;
+        if(arr[mid]==key) break;
+        else if(key>arr[mid]) l=mid+1;
+        else h=mid-1;
     }
-    return -1;
+    end=clock();
+    cout<<endl<<"Time taken in binary search "<<((end-start)/CLOCKS_PER_SEC)<<" sec"<<endl;
 }
-
-int linsear(int a[], int s, int key) {
-    for (int i = 0; i < s; i++) {
-        if (a[i] == key)
-            return i;
+void linear_search(vector<int>&arr,int key){
+float start,end;
+start=clock();
+    for(int i=0;i<arr.size();i++){
+        if(arr[i]==key) break;
     }
-    return -1;
+end=clock();
+cout<<"Time taken in linear search "<<((end-start)/CLOCKS_PER_SEC)<<" sec"<<endl;
 }
-
-int main() {
-    int n;
-    cout << "Enter the size of the array: ";
-    cin >> n;
-    int a[n];
-    cout << "Enter the values: ";
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
+int main(){
+int n;
+int key;
+cout<<"Enter the size\n";
+cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++){
+            int a=rand()%(INT_MAX);
+        arr[i]=a;
     }
-    int k;
-    cout << "Enter the key to search: ";
-    cin >> k;
-
-    clock_t start1 = clock();
-    int ans = linsear(a, n, k);
-    clock_t end1 = clock();
-    cout << "Time taken by linear search: " << (double)(end1 - start1) / CLOCKS_PER_SEC << " seconds" << endl;
-    cout << "Found at index: " << ans << endl;
-
-    clock_t start2 = clock();
-    int aaa = binarysearch(a, 0, n - 1, k);
-    clock_t end2 = clock();
-    cout << "Time taken by binary search: " << (double)(end2 - start2) / CLOCKS_PER_SEC << " seconds" << endl;
-    cout << "Found at index: " << aaa << endl;
-
-    return 0;
+    sort(arr.begin(),arr.end());
+    for(auto x:arr){
+        cout<<x<<" ";
+    }
+    cout<<endl<<"Enter ele to be searched\n";
+    cin>>key;
+    binary_search(arr,key);
+    linear_search(arr,key);
 }
