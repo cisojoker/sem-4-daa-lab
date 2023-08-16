@@ -23,10 +23,10 @@ vector<pair<pair<int, int>, int>> min_tree(int n, vector<pair<pair<int, int>, in
     key[1] = 0;
     parent[1] = -1;
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n+1; i++) {
         int mini = INT_MAX;
         int u;
-        for (int t = 1; t <= n; t++) {
+        for (int t = 1; t < n+1; t++) {
             if (mst[t] == false && key[t] < mini) {
                 u = t;
                 mini = key[u];
