@@ -2,15 +2,25 @@
 using namespace std;
 queue<int>q;
 vector<int>ans;
-void dfs(vector<vector<int>>&a,vector<int>& visited,int st){
-ans.push_back(st);
-visited[st]=1;
-int n=a.size();
-for(int i=0;i<n;i++){
-    if(a[st][i]&& !visited[i]){
-        dfs(a,visited,i);
+
+void dfs(vector<vector<int>>& a, vector<int>& visited, int st) {
+    stack<int> s;
+    s.push(st); // Push the starting vertex onto the stack
+    visited[st] = 1;
+    int n = a.size();
+
+    while (!s.empty()) {
+        int top = s.top();
+        ans.push_back(top);
+        s.pop();
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (a[top][i] && !visited[i]) {
+                s.push(i);
+                visited[i] = 1; // Mark the vertex as visited here
+            }
+        }
     }
-}
 }
 
 int main(){
